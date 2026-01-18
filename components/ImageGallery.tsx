@@ -96,6 +96,7 @@ export default function ImageGallery({
             {images.map((img) => (
               <div
                 key={img.id}
+                data-testid="image-card"
                 className="group relative aspect-video bg-neutral-900 rounded-xl overflow-hidden border border-neutral-800 hover:border-orange-500/50 transition-all"
               >
                 <img

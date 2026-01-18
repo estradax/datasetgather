@@ -39,7 +39,9 @@ export default function Collect() {
 
   // Capture function
   const capture = useCallback(async () => {
-    const imageSrc = webcamRef.current?.getScreenshot();
+    const imageSrc =
+      (typeof window !== "undefined" && (window as any).__MOCK_IMAGE__) ||
+      webcamRef.current?.getScreenshot();
     if (imageSrc && selectedLabel) {
       const id = crypto.randomUUID();
 
