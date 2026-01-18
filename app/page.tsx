@@ -1,36 +1,32 @@
 "use client";
 
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import Webcam from "react-webcam";
 import WebcamCapture from "../components/WebcamCapture";
 import ImageGallery from "../components/ImageGallery";
+import LabelSelector from "../components/LabelSelector";
+import {
+  CollectionProvider,
+  useCollection,
+} from "../context/CollectionContext";
 
-interface CapturedImage {
-  id: string;
-  url: string;
-  timestamp: Date;
-}
-
-export default function Home() {
+function CollectionPageContent() {
   const webcamRef = useRef<Webcam>(null);
-  const [isCapturing, setIsCapturing] = useState(false);
-  const [countdown, setCountdown] = useState<number | null>(null);
-  const [capturedImages, setCapturedImages] = useState<CapturedImage[]>([]);
+  const { isCapturing, setCountdown, addCapturedImage, selectedLabel } =
+    useCollection();
 
   // Capture function
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
-    if (imageSrc) {
-      setCapturedImages((prev) => [
-        {
-          id: crypto.randomUUID(),
-          url: imageSrc,
-          timestamp: new Date(),
-        },
-        ...prev,
-      ]);
+    if (imageSrc && selectedLabel) {
+      addCapturedImage({
+        id: crypto.randomUUID(),
+        url: imageSrc,
+        timestamp: new Date(),
+        label: selectedLabel,
+      });
     }
-  }, [webcamRef]);
+  }, [webcamRef, addCapturedImage, selectedLabel]);
 
   // Interval logic
   useEffect(() => {
@@ -59,27 +55,24 @@ export default function Home() {
       clearInterval(interval);
       clearInterval(countdownInterval);
     };
-  }, [isCapturing, capture]);
+  }, [isCapturing, capture, setCountdown]);
 
-  const toggleCapture = () => {
-    setIsCapturing(!isCapturing);
-  };
-
-  const clearImages = () => {
-    if (confirm("Are you sure you want to clear all images?")) {
-      setCapturedImages([]);
-    }
-  };
+  if (!selectedLabel) {
+    return <LabelSelector />;
+  }
 
   return (
     <main className="min-h-screen bg-neutral-900 text-white flex flex-col md:flex-row overflow-hidden font-sans">
-      <WebcamCapture
-        ref={webcamRef}
-        isCapturing={isCapturing}
-        countdown={countdown}
-        onToggleCapture={toggleCapture}
-      />
-      <ImageGallery images={capturedImages} onClear={clearImages} />
+      <WebcamCapture ref={webcamRef} />
+      <ImageGallery />
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <CollectionProvider>
+      <CollectionPageContent />
+    </CollectionProvider>
   );
 }
