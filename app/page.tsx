@@ -13,14 +13,14 @@ export default function Home() {
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-800 border border-neutral-700 text-neutral-400 text-sm mb-4">
             <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-            Dataset Collection Tool
+            Abjad Bahasa Isyarat
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-transparent">
-            Dataset Gather
+            SignGather
           </h1>
           <p className="text-neutral-400 text-lg md:text-xl max-w-lg mx-auto leading-relaxed">
-            Effortless image collection for your machine learning datasets.
-            Capture, label, and manage with ease.
+            Pengambilan Dataset Abjad Bahasa Isyarat dengan target 150 gambar
+            per abjad
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export default function Home() {
             className="group flex items-center justify-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40"
           >
             <Camera className="w-5 h-5" />
-            Start Collecting
+            Mulai Ambil Data
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
 
@@ -39,7 +39,7 @@ export default function Home() {
             className="group flex items-center justify-center gap-2 px-8 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl font-semibold transition-all border border-neutral-700 hover:border-neutral-600"
           >
             <Database className="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" />
-            See Collection
+            Lihat Koleksi
           </Link>
         </div>
       </div>
