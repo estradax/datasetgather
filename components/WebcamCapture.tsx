@@ -25,12 +25,12 @@ const WebcamCapture = forwardRef<Webcam>((_, ref) => {
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-orange-500 flex items-center gap-2">
             <Camera className="w-5 h-5 md:w-6 md:h-6" />
-            Dataset Gatherer
+            Pengambil Dataset
           </h1>
           <p className="text-neutral-400 text-[10px] md:text-sm mt-0.5 md:mt-1">
             {selectedLabel
-              ? `Collecting for Class: ${selectedLabel}`
-              : "Automatic web dataset collection tool"}
+              ? `Mengambil data untuk: ${selectedLabel}`
+              : "Alat pengambilan dataset otomatis"}
           </p>
         </div>
 
@@ -42,7 +42,7 @@ const WebcamCapture = forwardRef<Webcam>((_, ref) => {
             }}
             className="px-2 md:px-3 py-1 md:py-1.5 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-[10px] md:text-xs font-medium text-neutral-300 transition-colors flex items-center gap-1.5 md:gap-2"
           >
-            Change Label
+            Ganti Huruf
             <X className="w-2.5 h-2.5 md:w-3 md:h-3" />
           </button>
         )}
@@ -83,7 +83,7 @@ const WebcamCapture = forwardRef<Webcam>((_, ref) => {
             )}
           ></div>
           <span className="text-[10px] md:text-xs font-medium text-white">
-            {isCapturing ? "RECORDING" : "IDLE"}
+            {isCapturing ? "MEREKAM" : "SIAP"}
           </span>
         </div>
 
@@ -91,7 +91,7 @@ const WebcamCapture = forwardRef<Webcam>((_, ref) => {
         {selectedLabel && (
           <div className="absolute top-20 md:top-24 right-4 md:right-6 px-3 md:px-4 py-0.5 md:py-1 rounded-full bg-orange-500/20 backdrop-blur-md border border-orange-500/50 flex items-center gap-1.5 md:gap-2">
             <span className="text-[10px] md:text-xs font-bold text-orange-500">
-              LABEL: {selectedLabel}
+              HURUF: {selectedLabel}
             </span>
           </div>
         )}
@@ -111,12 +111,12 @@ const WebcamCapture = forwardRef<Webcam>((_, ref) => {
           {isCapturing ? (
             <>
               <Square className="w-4 h-4 md:w-5 md:h-5 fill-current" />
-              Stop Collection
+              Berhenti
             </>
           ) : (
             <>
               <Play className="w-4 h-4 md:w-5 md:h-5 fill-current" />
-              Start Collection
+              Mulai
             </>
           )}
         </button>

@@ -47,7 +47,7 @@ function CollectionContent() {
         >
           <ArrowLeft className="w-6 h-6 text-white" />
         </Link>
-        <h1 className="text-3xl font-bold tracking-tight">Collection</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Koleksi</h1>
       </div>
 
       {/* Filter Bar */}
@@ -95,9 +95,7 @@ export default function CollectionPage() {
       </div>
 
       <Suspense
-        fallback={
-          <div className="text-white text-center mt-20">Loading...</div>
-        }
+        fallback={<div className="text-white text-center mt-20">Memuat...</div>}
       >
         <CollectionContent />
       </Suspense>

@@ -57,24 +57,24 @@ describe("LabelSelector", () => {
   it("renders the title and description", () => {
     render(<LabelSelector />);
 
-    expect(screen.getByText("Select Label")).toBeDefined();
+    expect(screen.getByText("Pilih Abjad")).toBeDefined();
     expect(
-      screen.getByText(/Choose a label to start collecting images/i),
+      screen.getByText(/Pilih abjad untuk mulai mengambil dataset/i),
     ).toBeDefined();
   });
 
   it("displays the correct image counts for each letter", () => {
     render(<LabelSelector />);
 
-    // Check letter A (5 images)
-    expect(screen.getByText("5 images")).toBeDefined();
+    // Check letter A (5 gambar)
+    expect(screen.getByText("5 gambar")).toBeDefined();
 
-    // Check letter B (1 image - singular)
-    expect(screen.getByText("1 image")).toBeDefined();
+    // Check letter B (1 gambar)
+    expect(screen.getByText("1 gambar")).toBeDefined();
 
-    // Check letter C (0 images - default)
+    // Check letter C (0 gambar - default)
     const buttons = screen.getAllByRole("button");
     const buttonC = buttons.find((b) => b.textContent?.includes("C"));
-    expect(buttonC?.textContent).toContain("0 images");
+    expect(buttonC?.textContent).toContain("0 gambar");
   });
 });

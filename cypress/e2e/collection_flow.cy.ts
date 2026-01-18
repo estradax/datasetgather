@@ -64,32 +64,32 @@ describe("Image Collection Flow", () => {
   it("should allow selecting a label and starting collection with mocked Supabase", () => {
     // 1. Wait for counts to load
     cy.wait("@getCounts");
-    cy.contains("Select Label").should("be.visible");
+    cy.contains("Pilih Abjad").should("be.visible");
 
     // 2. Select label 'A'
-    cy.contains("A").click();
+    cy.get('[data-testid="label-button-A"]').click();
 
     // 3. Verify page content
-    cy.contains("Collecting for Class: A").should("be.visible");
-    cy.contains("Start Collection").should("be.visible");
+    cy.contains("Mengambil data untuk: A").should("be.visible");
+    cy.contains("Mulai").should("be.visible");
 
     // 4. Start collection
-    cy.contains("Start Collection").click();
+    cy.contains("Mulai").click();
 
     // 5. Verify recording state
-    cy.contains("Stop Collection").should("be.visible");
-    cy.contains("RECORDING").should("be.visible");
+    cy.contains("Berhenti").should("be.visible");
+    cy.contains("MEREKAM").should("be.visible");
 
     // 6. Wait for the upload call (happens after 3s countdown)
     cy.wait("@uploadImage", { timeout: 15000 });
 
     // 7. Verify the image appears in the gallery using data-testid
-    cy.contains("1 items collected").should("be.visible");
+    cy.contains("1 gambar terkumpul").should("be.visible");
     cy.get('[data-testid="image-card"]').should("have.length.at.least", 1);
 
     // 8. Stop collection
-    cy.contains("Stop Collection").click();
-    cy.contains("Start Collection").should("be.visible");
-    cy.contains("IDLE").should("be.visible");
+    cy.contains("Berhenti").click();
+    cy.contains("Mulai").should("be.visible");
+    cy.contains("SIAP").should("be.visible");
   });
 });

@@ -34,14 +34,14 @@ describe("WebcamCapture", () => {
     render(<WebcamCapture />);
 
     expect(screen.getByTestId("mock-webcam")).toBeDefined();
-    expect(screen.getByText("Dataset Gatherer")).toBeDefined();
-    expect(screen.getByText("Collecting for Class: A")).toBeDefined();
+    expect(screen.getByText("Pengambil Dataset")).toBeDefined();
+    expect(screen.getByText("Mengambil data untuk: A")).toBeDefined();
   });
 
   it("toggles capture when start/stop button is clicked", () => {
     render(<WebcamCapture />);
 
-    const startButton = screen.getByText("Start Collection");
+    const startButton = screen.getByText("Mulai");
     fireEvent.click(startButton);
     expect(mockSetIsCapturing).toHaveBeenCalledWith(true);
 
@@ -55,7 +55,7 @@ describe("WebcamCapture", () => {
     });
 
     render(<WebcamCapture />);
-    const stopButton = screen.getByText("Stop Collection");
+    const stopButton = screen.getByText("Berhenti");
     fireEvent.click(stopButton);
     expect(mockSetIsCapturing).toHaveBeenCalledWith(false);
   });
@@ -71,13 +71,13 @@ describe("WebcamCapture", () => {
 
     render(<WebcamCapture />);
     expect(screen.getByText("3")).toBeDefined();
-    expect(screen.getByText("RECORDING")).toBeDefined();
+    expect(screen.getByText("MEREKAM")).toBeDefined();
   });
 
   it("calls setSelectedLabel(null) when Change Label is clicked", () => {
     render(<WebcamCapture />);
 
-    const changeLabelButton = screen.getByText("Change Label");
+    const changeLabelButton = screen.getByText("Ganti Huruf");
     fireEvent.click(changeLabelButton);
 
     expect(mockSetIsCapturing).toHaveBeenCalledWith(false);

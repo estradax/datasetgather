@@ -61,9 +61,9 @@ export default function ImageGallery({
             <ImageIcon className="w-5 h-5 text-orange-500" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">Captured Images</h2>
+            <h2 className="text-lg font-bold text-white">Gambar Terambil</h2>
             <p className="text-neutral-500 text-xs">
-              {images.length} items collected
+              {images.length} gambar terkumpul
             </p>
           </div>
         </div>
@@ -71,12 +71,12 @@ export default function ImageGallery({
         {images.length > 0 && onClear && (
           <button
             onClick={() => {
-              if (confirm("Are you sure you want to clear all images?")) {
+              if (confirm("Apakah Anda yakin ingin menghapus semua gambar?")) {
                 onClear();
               }
             }}
             className="p-2 text-neutral-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
-            title="Clear all"
+            title="Hapus semua"
           >
             <Trash2 className="w-4 h-4" />
           </button>
@@ -89,7 +89,7 @@ export default function ImageGallery({
             <div className="w-16 h-16 rounded-2xl bg-neutral-900 flex items-center justify-center border border-neutral-800 border-dashed">
               <Camera className="w-8 h-8 opacity-20" />
             </div>
-            <p className="text-sm">No images captured yet</p>
+            <p className="text-sm">Belum ada gambar terambil</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

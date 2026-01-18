@@ -50,6 +50,7 @@ export default function LabelSelector() {
             return (
               <button
                 key={letter}
+                data-testid={`label-button-${letter}`}
                 onClick={() => setSelectedLabel(letter)}
                 className={clsx(
                   "aspect-square rounded-xl flex flex-col items-center justify-center transition-all duration-300 relative overflow-hidden group",

@@ -3,7 +3,7 @@ describe("Collect Flow", () => {
     cy.visit("/collect");
 
     // The label selector should be visible initially as no label is selected
-    cy.contains("Select Label").should("be.visible");
+    cy.contains("Pilih Abjad").should("be.visible");
 
     // Check if some letters are present
     cy.contains("A").should("be.visible");
@@ -15,12 +15,12 @@ describe("Collect Flow", () => {
     cy.visit("/collect");
 
     // Click on label 'A'
-    cy.contains("A").click();
+    cy.get('[data-testid="label-button-A"]').click();
 
     // The label selector should disappear and show the selected label
-    cy.contains("LABEL: A").should("be.visible");
+    cy.contains("HURUF: A").should("be.visible");
 
     // Check for Webcam related UI
-    cy.contains("Start Collection").should("be.visible");
+    cy.contains("Mulai").should("be.visible");
   });
 });

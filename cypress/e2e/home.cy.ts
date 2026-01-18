@@ -2,20 +2,20 @@ describe("Home Page", () => {
   it("should load the home page and show the main buttons", () => {
     cy.visit("/");
 
-    // Check for "Start Collecting" and "See Collection" buttons
-    cy.contains("Start Collecting").should("be.visible");
-    cy.contains("See Collection").should("be.visible");
+    // Check for "Mulai Ambil Data" and "Lihat Koleksi" buttons
+    cy.contains("Mulai Ambil Data").should("be.visible");
+    cy.contains("Lihat Koleksi").should("be.visible");
   });
 
-  it('should navigate to the collect page when clicking "Start Collecting"', () => {
+  it('should navigate to the collect page when clicking "Mulai Ambil Data"', () => {
     cy.visit("/");
-    cy.contains("Start Collecting").click();
+    cy.contains("Mulai Ambil Data").click();
     cy.url().should("include", "/collect");
   });
 
-  it('should navigate to the collection page when clicking "See Collection"', () => {
+  it('should navigate to the collection page when clicking "Lihat Koleksi"', () => {
     cy.visit("/");
-    cy.contains("See Collection").click();
+    cy.contains("Lihat Koleksi").click();
     cy.url().should("include", "/collection");
   });
 });

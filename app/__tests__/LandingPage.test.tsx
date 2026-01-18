@@ -18,14 +18,14 @@ vi.mock("next/link", () => {
 describe("Landing Page", () => {
   it("renders the main heading", () => {
     render(<Home />);
-    expect(screen.getByText("Dataset Gather")).toBeDefined();
+    expect(screen.getByText("SignGather")).toBeDefined();
   });
 
   it("renders the description", () => {
     render(<Home />);
     expect(
       screen.getByText(
-        /Effortless image collection for your machine learning datasets/i,
+        /Pengambilan Dataset Abjad Bahasa Isyarat dengan target 150 gambar per abjad/i,
       ),
     ).toBeDefined();
   });
@@ -33,10 +33,10 @@ describe("Landing Page", () => {
   it("renders the action buttons with correct links", () => {
     render(<Home />);
 
-    const startLink = screen.getByText("Start Collecting").closest("a");
+    const startLink = screen.getByText("Mulai Ambil Data").closest("a");
     expect(startLink).toHaveAttribute("href", "/collect");
 
-    const collectionLink = screen.getByText("See Collection").closest("a");
+    const collectionLink = screen.getByText("Lihat Koleksi").closest("a");
     expect(collectionLink).toHaveAttribute("href", "/collection");
   });
 });

@@ -11,9 +11,9 @@ vi.mock("react-intersection-observer", () => ({
 }));
 
 describe("ImageGallery", () => {
-  it('renders "No images captured" when empty', () => {
+  it('renders "Belum ada gambar terambil" when empty', () => {
     render(<ImageGallery images={[]} />);
-    expect(screen.getByText("No images captured yet")).toBeInTheDocument();
+    expect(screen.getByText("Belum ada gambar terambil")).toBeInTheDocument();
   });
 
   it("renders images", () => {
@@ -44,9 +44,9 @@ describe("ImageGallery", () => {
     // Let's verify structure or use container query if needed, but let's check if we can find the spinner container or just absence of "No images".
 
     // Actually, line 87: {images.length === 0 && !isLoading ? ...
-    // So if isLoading is true, "No images captured yet" should NOT be present.
+    // So if isLoading is true, "Belum ada gambar terambil" should NOT be present.
     expect(
-      screen.queryByText("No images captured yet"),
+      screen.queryByText("Belum ada gambar terambil"),
     ).not.toBeInTheDocument();
   });
 
@@ -75,7 +75,7 @@ describe("ImageGallery", () => {
       />,
     );
 
-    const clearBtn = screen.getByTitle("Clear all");
+    const clearBtn = screen.getByTitle("Hapus semua");
     fireEvent.click(clearBtn);
 
     expect(window.confirm).toHaveBeenCalled();
