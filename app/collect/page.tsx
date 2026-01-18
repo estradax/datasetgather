@@ -7,12 +7,9 @@ import { useMutation } from "@tanstack/react-query";
 import WebcamCapture from "../../components/WebcamCapture";
 import ImageGallery from "../../components/ImageGallery";
 import LabelSelector from "../../components/LabelSelector";
-import {
-  CollectionProvider,
-  useCollection,
-} from "../../context/CollectionContext";
+import { useCollection } from "../../context/CollectionContext";
 
-function CollectionPageContent() {
+export default function Collect() {
   const webcamRef = useRef<Webcam>(null);
   const {
     isCapturing,
@@ -115,13 +112,5 @@ function CollectionPageContent() {
       <WebcamCapture ref={webcamRef} />
       <ImageGallery />
     </main>
-  );
-}
-
-export default function Home() {
-  return (
-    <CollectionProvider>
-      <CollectionPageContent />
-    </CollectionProvider>
   );
 }
