@@ -14,6 +14,7 @@ interface CapturedImage {
   timestamp: Date;
   label: string;
   status: "pending" | "uploading" | "success" | "error";
+  name?: string;
 }
 
 interface CollectionContextType {

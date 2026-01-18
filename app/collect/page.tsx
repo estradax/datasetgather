@@ -17,6 +17,8 @@ export default function Collect() {
     addCapturedImage,
     updateImageStatus,
     selectedLabel,
+    capturedImages,
+    clearImages,
   } = useCollection();
 
   // Mutation for uploading image
@@ -110,7 +112,7 @@ export default function Collect() {
   return (
     <main className="min-h-screen bg-neutral-900 text-white flex flex-col md:flex-row overflow-hidden font-sans">
       <WebcamCapture ref={webcamRef} />
-      <ImageGallery />
+      <ImageGallery images={capturedImages} onClear={clearImages} />
     </main>
   );
 }
