@@ -7,6 +7,7 @@ import React, {
   ReactNode,
   useCallback,
 } from "react";
+import { useQueryState, parseAsString } from "nuqs";
 
 interface CapturedImage {
   id: string;
@@ -19,7 +20,9 @@ interface CapturedImage {
 
 interface CollectionContextType {
   selectedLabel: string | null;
-  setSelectedLabel: React.Dispatch<React.SetStateAction<string | null>>;
+  setSelectedLabel: (
+    value: string | null | ((old: string | null) => string | null),
+  ) => Promise<URLSearchParams> | void;
   isCapturing: boolean;
   setIsCapturing: React.Dispatch<React.SetStateAction<boolean>>;
   countdown: number | null;
@@ -38,7 +41,10 @@ const CollectionContext = createContext<CollectionContextType | undefined>(
 );
 
 export function CollectionProvider({ children }: { children: ReactNode }) {
-  const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
+  const [selectedLabel, setSelectedLabel] = useQueryState(
+    "label",
+    parseAsString,
+  );
   const [isCapturing, setIsCapturing] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [capturedImages, setCapturedImages] = useState<CapturedImage[]>([]);
