@@ -8,6 +8,7 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+import clsx from "clsx";
 import { useInView } from "react-intersection-observer";
 
 export interface GalleryImage {
@@ -25,6 +26,7 @@ interface ImageGalleryProps {
   hasMore?: boolean;
   loadMore?: () => void;
   headerContent?: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 export default function ImageGallery({
@@ -34,6 +36,7 @@ export default function ImageGallery({
   loadMore,
   headerContent,
   onClear,
+  fullWidth = false,
 }: ImageGalleryProps & { onClear?: () => void } = {}) {
   const { ref, inView } = useInView();
 
@@ -44,7 +47,14 @@ export default function ImageGallery({
   }, [inView, hasMore, loadMore]);
 
   return (
-    <div className="md:w-1/2 w-full h-1/2 md:h-screen bg-neutral-950 flex flex-col border-t md:border-t-0 border-neutral-800">
+    <div
+      className={clsx(
+        "bg-neutral-950 flex flex-col border-neutral-800",
+        fullWidth
+          ? "w-full h-full"
+          : "md:w-1/2 w-full h-1/2 md:h-screen border-t md:border-t-0",
+      )}
+    >
       <div className="p-6 border-b border-neutral-900 flex justify-between items-center bg-neutral-950 sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-neutral-900 rounded-lg">

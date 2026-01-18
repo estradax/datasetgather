@@ -79,6 +79,7 @@ function CollectionContent() {
           isLoading={isFetchingNextPage || status === "pending"}
           hasMore={hasNextPage}
           loadMore={() => fetchNextPage()}
+          fullWidth
         />
       </div>
     </div>
