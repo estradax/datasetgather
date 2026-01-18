@@ -1,127 +1,48 @@
-"use client";
-
-import React, { useRef, useCallback, useEffect } from "react";
-import Webcam from "react-webcam";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
-import WebcamCapture from "../components/WebcamCapture";
-import ImageGallery from "../components/ImageGallery";
-import LabelSelector from "../components/LabelSelector";
-import {
-  CollectionProvider,
-  useCollection,
-} from "../context/CollectionContext";
-
-function CollectionPageContent() {
-  const webcamRef = useRef<Webcam>(null);
-  const {
-    isCapturing,
-    setCountdown,
-    addCapturedImage,
-    updateImageStatus,
-    selectedLabel,
-  } = useCollection();
-
-  // Mutation for uploading image
-  const { mutate: uploadImage } = useMutation({
-    mutationFn: async ({ file, label }: { file: File; label: string }) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("label", label);
-
-      const response = await axios.post("/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      return response.data;
-    },
-  });
-
-  // Capture function
-  const capture = useCallback(async () => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    if (imageSrc && selectedLabel) {
-      const id = crypto.randomUUID();
-
-      // Convert base64 to blob
-      const res = await fetch(imageSrc);
-      const blob = await res.blob();
-      const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
-
-      addCapturedImage({
-        id,
-        url: imageSrc,
-        timestamp: new Date(),
-        label: selectedLabel,
-        status: "uploading",
-      });
-
-      uploadImage(
-        { file, label: selectedLabel },
-        {
-          onSuccess: () => {
-            updateImageStatus(id, "success");
-          },
-          onError: () => {
-            updateImageStatus(id, "error");
-          },
-        },
-      );
-    }
-  }, [
-    webcamRef,
-    addCapturedImage,
-    selectedLabel,
-    uploadImage,
-    updateImageStatus,
-  ]);
-
-  // Interval logic
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    let countdownInterval: NodeJS.Timeout;
-
-    if (isCapturing) {
-      // Initial countdown reset only if it's null (not active)
-      setCountdown((prev) => (prev === null ? 3 : prev));
-
-      // Main interval loop for 3 seconds per capture
-      interval = setInterval(() => {
-        capture();
-        setCountdown(3); // Reset countdown after capture
-      }, 3000);
-
-      // Countdown ticker (updates every second)
-      countdownInterval = setInterval(() => {
-        setCountdown((prev) => (prev !== null && prev > 1 ? prev - 1 : 1));
-      }, 1000);
-    } else {
-      setCountdown(null);
-    }
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(countdownInterval);
-    };
-  }, [isCapturing, capture, setCountdown]);
-
-  if (!selectedLabel) {
-    return <LabelSelector />;
-  }
-
-  return (
-    <main className="min-h-screen bg-neutral-900 text-white flex flex-col md:flex-row overflow-hidden font-sans">
-      <WebcamCapture ref={webcamRef} />
-      <ImageGallery />
-    </main>
-  );
-}
+import Link from "next/link";
+import { ArrowRight, Database, Camera } from "lucide-react";
 
 export default function Home() {
   return (
-    <CollectionProvider>
-      <CollectionPageContent />
-    </CollectionProvider>
+    <main className="min-h-screen bg-neutral-900 text-white flex flex-col items-center justify-center font-sans p-6 overflow-hidden relative">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="z-10 flex flex-col items-center text-center max-w-2xl gap-8">
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-800 border border-neutral-700 text-neutral-400 text-sm mb-4">
+            <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+            Dataset Collection Tool
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-transparent">
+            Dataset Gather
+          </h1>
+          <p className="text-neutral-400 text-lg md:text-xl max-w-lg mx-auto leading-relaxed">
+            Effortless image collection for your machine learning datasets.
+            Capture, label, and manage with ease.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
+          <Link
+            href="/collect"
+            className="group flex items-center justify-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40"
+          >
+            <Camera className="w-5 h-5" />
+            Start Collecting
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+
+          <Link
+            href="/collect"
+            className="group flex items-center justify-center gap-2 px-8 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl font-semibold transition-all border border-neutral-700 hover:border-neutral-600"
+          >
+            <Database className="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" />
+            See Collection
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 }
