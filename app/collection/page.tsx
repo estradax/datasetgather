@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useQueryState, parseAsString } from "nuqs";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 export default function CollectionPage() {
-  const [selectedLetter, setSelectedLetter] = useState("A");
+  const [selectedLetter, setSelectedLetter] = useQueryState(
+    "letter",
+    parseAsString.withDefault("A"),
+  );
 
   return (
     <main className="min-h-screen bg-neutral-900 text-white flex flex-col font-sans p-6 overflow-hidden relative">
