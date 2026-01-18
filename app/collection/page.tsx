@@ -51,7 +51,7 @@ function CollectionContent() {
       </div>
 
       {/* Filter Bar */}
-      <div className="w-full overflow-x-auto p-4 scrollbar-hide">
+      <div className="w-full overflow-x-auto scrollbar-hide">
         <div className="flex gap-2 min-w-max">
           {ALPHABET.map((letter) => (
             <button
@@ -61,7 +61,7 @@ function CollectionContent() {
                   w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all
                   ${
                     selectedLetter === letter
-                      ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20 scale-110"
+                      ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
                       : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white border border-neutral-700"
                   }
                 `}
