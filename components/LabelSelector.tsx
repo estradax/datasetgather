@@ -29,8 +29,8 @@ export default function LabelSelector() {
   };
 
   return (
-    <div className="w-full h-screen bg-neutral-950 flex flex-col items-center justify-center p-8">
-      <div className="max-w-4xl w-full text-center space-y-8">
+    <div className="w-full min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-4 md:p-8">
+      <div className="max-w-4xl w-full text-center space-y-6 md:space-y-8 py-8 md:py-12">
         <div className="space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
             Select Label
@@ -40,7 +40,7 @@ export default function LabelSelector() {
           </p>
         </div>
 
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-4">
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 md:gap-4">
           {ALPHABET.map((letter) => {
             const count = getCountForLetter(letter);
             return (
