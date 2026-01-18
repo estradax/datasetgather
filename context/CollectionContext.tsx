@@ -13,6 +13,7 @@ interface CapturedImage {
   url: string;
   timestamp: Date;
   label: string;
+  status: "pending" | "uploading" | "success" | "error";
 }
 
 interface CollectionContextType {
@@ -24,6 +25,10 @@ interface CollectionContextType {
   setCountdown: React.Dispatch<React.SetStateAction<number | null>>;
   capturedImages: CapturedImage[];
   addCapturedImage: (image: CapturedImage) => void;
+  updateImageStatus: (
+    id: string,
+    status: "pending" | "uploading" | "success" | "error",
+  ) => void;
   clearImages: () => void;
 }
 
@@ -41,6 +46,15 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
     setCapturedImages((prev) => [image, ...prev]);
   }, []);
 
+  const updateImageStatus = useCallback(
+    (id: string, status: "pending" | "uploading" | "success" | "error") => {
+      setCapturedImages((prev) =>
+        prev.map((img) => (img.id === id ? { ...img, status } : img)),
+      );
+    },
+    [],
+  );
+
   const clearImages = useCallback(() => {
     setCapturedImages([]);
   }, []);
@@ -56,6 +70,7 @@ export function CollectionProvider({ children }: { children: ReactNode }) {
         setCountdown,
         capturedImages,
         addCapturedImage,
+        updateImageStatus,
         clearImages,
       }}
     >

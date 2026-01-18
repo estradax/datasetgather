@@ -2,6 +2,8 @@
 
 import React, { useRef, useCallback, useEffect } from "react";
 import Webcam from "react-webcam";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 import WebcamCapture from "../components/WebcamCapture";
 import ImageGallery from "../components/ImageGallery";
 import LabelSelector from "../components/LabelSelector";
@@ -12,21 +14,68 @@ import {
 
 function CollectionPageContent() {
   const webcamRef = useRef<Webcam>(null);
-  const { isCapturing, setCountdown, addCapturedImage, selectedLabel } =
-    useCollection();
+  const {
+    isCapturing,
+    setCountdown,
+    addCapturedImage,
+    updateImageStatus,
+    selectedLabel,
+  } = useCollection();
+
+  // Mutation for uploading image
+  const { mutate: uploadImage } = useMutation({
+    mutationFn: async ({ file, label }: { file: File; label: string }) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("label", label);
+
+      const response = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    },
+  });
 
   // Capture function
-  const capture = useCallback(() => {
+  const capture = useCallback(async () => {
     const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc && selectedLabel) {
+      const id = crypto.randomUUID();
+
+      // Convert base64 to blob
+      const res = await fetch(imageSrc);
+      const blob = await res.blob();
+      const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
+
       addCapturedImage({
-        id: crypto.randomUUID(),
+        id,
         url: imageSrc,
         timestamp: new Date(),
         label: selectedLabel,
+        status: "uploading",
       });
+
+      uploadImage(
+        { file, label: selectedLabel },
+        {
+          onSuccess: () => {
+            updateImageStatus(id, "success");
+          },
+          onError: () => {
+            updateImageStatus(id, "error");
+          },
+        },
+      );
     }
-  }, [webcamRef, addCapturedImage, selectedLabel]);
+  }, [
+    webcamRef,
+    addCapturedImage,
+    selectedLabel,
+    uploadImage,
+    updateImageStatus,
+  ]);
 
   // Interval logic
   useEffect(() => {
@@ -34,8 +83,8 @@ function CollectionPageContent() {
     let countdownInterval: NodeJS.Timeout;
 
     if (isCapturing) {
-      // Initial countdown reset
-      setCountdown(3);
+      // Initial countdown reset only if it's null (not active)
+      setCountdown((prev) => (prev === null ? 3 : prev));
 
       // Main interval loop for 3 seconds per capture
       interval = setInterval(() => {

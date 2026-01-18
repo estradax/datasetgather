@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { Camera, Image as ImageIcon, Trash2 } from "lucide-react";
+import {
+  Camera,
+  Image as ImageIcon,
+  Trash2,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
 import { useCollection } from "../context/CollectionContext";
 
 export default function ImageGallery() {
@@ -64,6 +70,19 @@ export default function ImageGallery() {
                     {img.timestamp.toLocaleTimeString()}
                   </span>
                 </div>
+
+                {/* Upload Status Overlay */}
+                {img.status === "uploading" && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+                  </div>
+                )}
+
+                {img.status === "error" && (
+                  <div className="absolute inset-0 bg-red-500/50 flex items-center justify-center">
+                    <AlertCircle className="w-8 h-8 text-white" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
