@@ -35,7 +35,7 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/collect"
+            href="/collection"
             className="group flex items-center justify-center gap-2 px-8 py-4 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl font-semibold transition-all border border-neutral-700 hover:border-neutral-600"
           >
             <Database className="w-5 h-5 text-neutral-400 group-hover:text-white transition-colors" />
